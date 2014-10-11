@@ -5,33 +5,21 @@
 
 const int buttonPin=2;
 int buttonState=1;
+volatile int state=LOW;
+int ledPin=13;
 
 unsigned long currentOnTime=0, lastOnTime=0;
 int rotationalVelocity=0;
 
 void setup(){
-  pinMode(buttonPin,INPUT);
-  Serial.begin(9600);
+  pinMode(ledPin,OUTPUT);
+  attachInterrupt(0,blink,CHANGE);
 }
 
 void loop(){
-  buttonState=digitalRead(buttonPin);
-  if(buttonState==0){
-    digitalWrite(13,HIGH);
-    currentOnTime=millis();
-  }
-  if(buttonState==1){
-    digitalWrite(13,LOW);
-    rotationalVelocity=0;
-  }
-  
-  rotationalVelocity=currentOnTime-lastOnTime;//not inverting this for now.
-  rotationalVelocity=map(rotationalVelocity,0,1000,0,255);
-  lastOnTime=currentOnTime;
+    digitalWrite(ledPin,state);
+}
 
-  
-  if(buttonState==0){
-    Serial.println(rotationalVelocity);
-  }
-//  delay(5);
+void blink(){
+  state=!state;
 }
