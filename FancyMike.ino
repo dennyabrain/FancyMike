@@ -3,23 +3,24 @@
 //We calculate the time difference between consecutive 0s to measure the rotational velocity of the wheel.
 //Written by Denny George
 
-const int buttonPin=2;
-int buttonState=1;
-volatile int state=LOW;
-int ledPin=13;
+//RPM Counter from http://elimelecsarduinoprojects.blogspot.com/2013/06/measure-rpms-arduino.html
 
-unsigned long currentOnTime=0, lastOnTime=0;
-int rotationalVelocity=0;
+volatile unsigned long timePerRotation = 0;
+volatile unsigned long lastmillis=0;
+volatile unsigned long currentmillis=0;
 
 void setup(){
-  pinMode(ledPin,OUTPUT);
-  attachInterrupt(0,blink,CHANGE);
+  Serial.begin(9600);
+  attachInterrupt(0,rpm_fan,RISING);
 }
 
 void loop(){
-    digitalWrite(ledPin,state);
+  timePerRotation=constrain(timePerRotation,6000,7500);
+  Serial.println(timePerRotation);
 }
 
-void blink(){
-  state=!state;
+void rpm_fan(){
+  currentmillis=millis();
+  timePerRotation=(lastmillis-currentmillis)%10000;
+  lastmillis=currentmillis;
 }
