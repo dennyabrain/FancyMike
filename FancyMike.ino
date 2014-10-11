@@ -4,11 +4,10 @@
 //Written by Denny George
 
 const int buttonPin=2;
-
 int buttonState=1;
-//float currentOff, lastOff=1;
-unsigned long currentOffTime=0, lastOffTime= 0;
-float timePerRotation=0;
+
+unsigned long currentOnTime=0, lastOnTime=0;
+int rotationalVelocity=0;
 
 void setup(){
   pinMode(buttonPin,INPUT);
@@ -19,9 +18,20 @@ void loop(){
   buttonState=digitalRead(buttonPin);
   if(buttonState==0){
     digitalWrite(13,HIGH);
+    currentOnTime=millis();
   }
-
   if(buttonState==1){
     digitalWrite(13,LOW);
+    rotationalVelocity=0;
   }
+  
+  rotationalVelocity=currentOnTime-lastOnTime;//not inverting this for now.
+  rotationalVelocity=map(rotationalVelocity,0,1000,0,255);
+  lastOnTime=currentOnTime;
+
+  
+  if(buttonState==0){
+    Serial.println(rotationalVelocity);
+  }
+//  delay(5);
 }
