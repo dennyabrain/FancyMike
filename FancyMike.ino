@@ -3,8 +3,6 @@
 //We calculate the time difference between consecutive 0s to measure the rotational velocity of the wheel.
 //Written by Denny George
 
-//RPM Counter from http://elimelecsarduinoprojects.blogspot.com/2013/06/measure-rpms-arduino.html
-
 volatile unsigned long timePerRotation = 0;
 volatile unsigned long lastmillis=0;
 volatile unsigned long currentmillis=0;
@@ -15,7 +13,8 @@ void setup(){
 }
 
 void loop(){
-  timePerRotation=constrain(timePerRotation,6000,7500);
+  timePerRotation=constrain(timePerRotation,6100,7500);
+ // timePerRotation=map(timePerRotation,6100,7000,0,255);
   Serial.println(timePerRotation);
 }
 
