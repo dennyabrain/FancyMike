@@ -34,25 +34,33 @@ void loop() {
       if (buttonState == LOW) {
         ledState = LOW ;
         //Serial.println("Magnet Near");
-        long timeDiff=millis()-lastOnTime;
-        if(timeDiff>5){
-          Serial.write(5);
+        //Serial.print(5);
+        long currentOnTime=millis();
+        long timeDiff=currentOnTime-lastOnTime;
+        lastOnTime=currentOnTime;
+        timeDiff=constrain(timeDiff,1500,2500);
+        timeDiff=timeDiff/10;
+        Serial.write(timeDiff);
+        //Serial.println(timeDiff);
+        /*
+        if(timeDiff>2500){
+          Serial.print(5);
         }
-        else if(timeDiff<5 && timeDiff>4){
-          Serial.write(4);
+        else if(timeDiff<2500 && timeDiff>2000){
+          Serial.print(4);
         }
-        else if(timeDiff<4 && timeDiff>3){
-          Serial.write(3);
+        else if(timeDiff<2000 && timeDiff>1500){
+         Serial.print(3);
         }
-        else if(timeDiff<3 && timeDiff>2){
-          Serial.write(2);
+        else if(timeDiff<1500 && timeDiff>1250){
+          Serial.print(2);
         }
-        else if(timeDiff<2 && timeDiff>1){
-          Serial.write(1);
+        else if(timeDiff<1250 && timeDiff>1000){
+          Serial.print(1);
         }
-        else if(timeDiff<1 && timeDiff>0){
-          Serial.write(0);
-        }        
+        else if(timeDiff<1000 && timeDiff>0){
+          Serial.print(0);
+        }*/        
       }
       else{
         ledState = HIGH;
