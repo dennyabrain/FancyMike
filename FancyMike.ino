@@ -12,6 +12,7 @@ int lastButtonState = LOW;
 long lastDebounceTime = 0;  
 long debounceDelay = 10;    
 long lastOnTime=0;
+int t=1000;
 
 void setup() {
   pinMode(buttonPin, INPUT);
@@ -32,7 +33,7 @@ void loop() {
     if (reading != buttonState) {
       buttonState = reading;
       if (buttonState == LOW) {
-        ledState = LOW ;
+        ledState = HIGH ;
         //Serial.println("Magnet Near");
         //Serial.print(5);
         long currentOnTime=millis();
@@ -63,7 +64,7 @@ void loop() {
         }*/        
       }
       else{
-        ledState = HIGH;
+        ledState = LOW;
       }
     }
   }

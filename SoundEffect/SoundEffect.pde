@@ -17,12 +17,13 @@ float delayTime;
 Serial myPort;
 float inByte;
 float param;
+float paramBitCrush;
 
 void setup(){
   size(400,200);
   minim = new Minim(this);
   out = minim.getLineOut();
-  myDelay = new Delay(0.5,0.8,true,true);
+  myDelay = new Delay(0.001,0.8,true,true);
   //myDelay = new Delay(0.001);
   bitCrush = new BitCrush(16,out.sampleRate());
   
@@ -39,7 +40,7 @@ void setup(){
 }
 
 void draw(){
-  background(#FFFFFF);
+  background(#000000);
   text(delayTime,80,60);
   
 }
@@ -47,16 +48,23 @@ void draw(){
 void mouseMoved()
 {
   // set the delay time by the horizontal location
- // delayTime = map( mouseY, 0, height, 0.0001, 1 );
- // myDelay.setDelTime( delayTime );
-  float bits = map( mouseX, 0, width, 1, 16 );
-  bitCrush.setBitRes(bits);
+  //delayTime = map( mouseY, 0, height, 0.0001, 1 );
+  //myDelay.setDelTime( delayTime );
+  //float bits = map( mouseX, 0, width, 1, 16 );
+  //bitCrush.setBitRes(bits);
 }
 
 void serialEvent(Serial myPort){
   inByte= myPort.read();
   //println(inByte);
   param=map(inByte,150,250,0.001,0.5);
+  //paramBitCrush = map(param, 0.000,0.5,16,1);
+  /*if(param>0){
+    param-=0.005
+  }
+  */
+
+  
   println(param);
   
   /*
@@ -97,4 +105,5 @@ void serialEvent(Serial myPort){
       break;
   }*/
  myDelay.setDelTime(param);
+ //bitCrush.setBitRes(paramBitCrush);
 }
